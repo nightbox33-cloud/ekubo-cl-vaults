@@ -1,0 +1,26 @@
+########################################################################################################
+# F1: _process_deposit uses vault_level_positions for the transferFrom but mints from caller amounts
+########################################################################################################
+ K=1           cost  178451.6013+ 200000.0000  ->      1.000000 x of the PREDEPOSIT supply (victim keeps 50.00000000%)
+ K=10          cost  178451.6013+ 200000.0000  ->     10.000000 x of the PREDEPOSIT supply (victim keeps 9.09090909%)
+ K=1000        cost  178451.6013+ 200000.0000  ->   1000.000000 x of the PREDEPOSIT supply (victim keeps 0.09990010%)
+ K=1000000     cost  178451.6013+ 200000.0000  ->  1000000.000000 x of the PREDEPOSIT supply (victim keeps 0.00010000%)
+ K=1000000000  cost  178451.6013+ 200000.0000  ->  1000000000.000000 x of the PREDEPOSIT supply (victim keeps 0.00000010%)
+
+# attacker exits on historical Core (withdrawal fee still charged -> withdraw() works)
+ victim TVL          : 200,000.000000 + 200,000.000000
+ vault position      : 178,451.601348 xSTRK + 200,000.000000 STRK
+ attacker cost       : 178,451.601348 xSTRK + 200,000.000000 STRK
+ attacker receives   : 356,867.155509 xSTRK + 399,959.600040 STRK
+ NET PROFIT          : 178,415.554161 xSTRK + 199,959.600040 STRK  = 99.9798%
+ victim keeps        : 100.00000000% of the vault
+
+########################################################################################################
+# F2: withdraw() demands amount_i*999900/1e6-1 but Ekubo pays floor(amount_i) -> every redeem reverts
+########################################################################################################
+-- current Core >= 47e9b24
+   TVL=     1,000  position.amount0=892258006741079353814      ekubo_pays=892258006741079353813      vault_expects=892168780940405245877      -> REVERT
+   TVL= 1,000,000  position.amount0=892258006741079353813975   ekubo_pays=892258006741079353813974   vault_expects=892168780940405245878592   -> REVERT
+-- historical Core 4a2e3ea
+   TVL=     1,000  position.amount0=892258006741079353814      ekubo_pays=892168780940405245873      vault_expects=892168780940405245877      -> REVERT
+   TVL= 1,000,000  position.amount0=892258006741079353813975   ekubo_pays=892168780940405245874316   vault_expects=892168780940405245878592   -> REVERT

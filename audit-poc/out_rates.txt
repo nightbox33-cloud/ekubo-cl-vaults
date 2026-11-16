@@ -1,0 +1,13 @@
+Reversion rate of withdraw() on the HISTORICAL Ekubo Core (4a2e3ea, withdrawal fee charged)
+Config: xSTRK/STRK, fee 0.01% = 34028236692093847977029636859101184, tick spacing 200,
+bounds [104000, 124000], price tick 114000.  5000 random liquidity values per bucket.
+
+ L range              position size (xSTRK)   withdraw() succeeds
+ [1e21, 1e22]         ~5 ... 47              88.8 %
+ [1e22, 1e23]         ~47 ... 471            15.1 %
+ [1e23, 1e24]         ~471 ... 4 712          0.0 %
+ [2e25, 4e25]         ~94 224 ... 188 448     0.0 %
+
+=> any real vault position (>= ~1e23 liquidity, i.e. a few hundred xSTRK) can never be redeemed
+   on the historical Core either; on the CURRENT Core (no withdrawal fee) the assertion is
+   structurally unsatisfiable at every size (0/200000 checked, see out_verify.txt).

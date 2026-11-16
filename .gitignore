@@ -8,3 +8,6 @@ coverage_report
 node_modules
 .env
 class_hashes.json
+# local audit PoC
+__pycache__
+*.pyc

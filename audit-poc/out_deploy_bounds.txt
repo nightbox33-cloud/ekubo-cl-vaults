@@ -1,0 +1,13 @@
+Deploy-script configuration (scripts/cl_vault/deploy_cl_vault.ts:199-212) evaluated locally:
+
+  priceToTick(1.11776, false, 200, 18, 18) = 111200
+  priceToTick(1.121,   false, 200, 18, 18) = 114200
+  pool key: token0/token1 sorted, fee = 34028236692093847977029636859101184, tick_spacing = 200
+  init_values = (1e18, 1e18)
+
+Re-running the C-1 PoC with bounds [111200, 114200] and price tick 113000:
+  position            = 119,104.623522 xSTRK + 200,000.000000 STRK
+  attacker cost       = 119,104.623522 xSTRK + 200,000.000000 STRK
+  shares minted       = 199,999,999,999,999,999,999,999,847,159 (1e6 x the pre-deposit supply)
+  victim keeps        = 0.00010000 % of the vault
+  exit (old Core)     = 238,185.187935 xSTRK + 399,959.600040 STRK  ->  +99.9798 %
